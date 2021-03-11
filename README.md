@@ -18,7 +18,10 @@ in a test environment with fake Ether.
     - [Truffle](#truffle)
     - [Genache](#genache)
     - [Metamask](#metamask)
-  - [02. First Smart Contract](#02-first-smart-contract)
+  - [02. First Smart Contract with Truffle](#02-first-smart-contract-with-truffle)
+    - [Setup](#setup)
+    - [Create Token Contract + interaction](#create-token-contract--interaction)
+    - [Testing](#testing)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -56,16 +59,70 @@ Install: https://www.trufflesuite.com/ganache
 We will use the MetaMask extension for the wallet.
 
 
-## 02. First Smart Contract
+## 02. First Smart Contract with Truffle
 
-Open Genache.
+### Setup
+
+1. Open Genache.
 
 ![](docs/2021-03-11-22-51-00.png)
 
-Navigate in terminal: `cd token_sale/`
-
-Initialise a new Ethereum project using Truffle: `truffle init`
+2. Navigate in terminal: `cd token_sale/`
+3. Initialise a new Ethereum project using Truffle: `truffle init`
 
 ![](docs/2021-03-11-22-54-04.png)
 
-Go into `truffe-config.js`.
+4. Go into `truffe-config.js` and add `network.development` information (localhost, with port
+provided by the running Genashe instance).
+
+### Create Token Contract + interaction
+
+1. Create file `contracts/DappToken.sol`. It will be our ERC20 token.
+2. After creating our basic token, we want to create a new migration file: `2_deploy_contracts.js`
+3. Then we can run migrations using: `truffle migrate` (use --reset flag if needed) (set the `compilers.solc` option for your version of Solidity if needed)
+4. Open the truffle console: `truffle console`. The Truffle console is a JS runtime environment.
+5. We will see the `DappToken` object exists as a JavaScript object.
+6. Get JS token object for the API using:
+
+```js
+let token;
+DappToken.deployed().then(obj => token = obj);
+```
+
+7. We can now call functions.
+
+```js
+let totalSupply;
+token.totalSupply().then(e => totalSupply = e);
+totalSupply.toNumber() // 1,000,000
+
+token.balanceOf("0xB4d9a7C82b2b8D066aa47C26276541Db6D68211c").then(e => e.toNumber()); // User owns 1,000,000 DappToken
+```
+
+8. We can see that the first address in Ganache has lost some Ethereum when we deployed our contract - and we can see that it has gained DappTokens.
+
+
+### Testing
+
+1. Truffle comes with the Mocha testing framework and Chai assertion library.
+
+2. Create `test/DappToken.js`. e.g.
+
+```js
+const DappToken = artifacts.require("./DappToken.sol");
+
+contract('DappToken', function(accounts) {
+
+  it('sets the total supply upon deployment', function(){
+    return DappToken.deployed().then(function(instance) {
+      tokenInstance = instance;
+      return tokenInstance.totalSupply();
+    }).then(function(totalSupply){
+      assert.equal(totalSupply.toNumber(), 1000000, 'sets the total supply to 1,000,000');
+    });
+  });
+
+});
+```
+
+3. Run the tests using: `truffle test`
