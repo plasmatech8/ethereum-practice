@@ -33,7 +33,7 @@ contract DappToken is IERC20 {
     // Token Metadata
     string constant name_ = "DappToken";
     string constant symbol_ = "DAPP";
-    uint8 constant decimals_ = 18;
+    uint8 constant decimals_ = 3;
     uint256 totalSupply_ = 1000000;
 
     function name() public pure returns (string memory) {

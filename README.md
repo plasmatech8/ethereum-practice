@@ -22,6 +22,7 @@ in a test environment with fake Ether.
     - [Setup](#setup)
     - [Create Token Contract + interaction](#create-token-contract--interaction)
     - [Testing](#testing)
+    - [Connect to Metamask](#connect-to-metamask)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -126,3 +127,20 @@ contract('DappToken', function(accounts) {
 ```
 
 3. Run the tests using: `truffle test`
+
+### Connect to Metamask
+
+1. Add custom RPC
+   1. RPC url: `http://127.0.0.1:7545`
+   2. Chain ID: `1337`
+2. Add new token
+   1. Custom token
+   2. Get address from Genache deployed contracts
+3. Send tokens to your metamask
+
+```js
+let token;
+DappToken.deployed().then(obj => token = obj);
+token.transfer("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6", 5000); // Send 5 DAPP tokens
+token.balanceOf("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6").then(e => e.toNumber());
+```
