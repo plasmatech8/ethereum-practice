@@ -32,7 +32,6 @@ contract DappToken is IERC20{
     string public constant name = "DappToken";
     string public constant symbol = "DAPP";
     uint8 public constant decimals = 3;
-    uint256 public override totalSupply = 1000000;
 
     // Initialisation
     using SafeMath for uint256;
@@ -41,6 +40,7 @@ contract DappToken is IERC20{
     }
 
     // Token Ledger
+    uint256 public override totalSupply = 1000000;
     mapping(address => uint256) public override balanceOf;
     mapping(address => mapping(address => uint256)) public override allowance;
 

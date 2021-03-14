@@ -23,6 +23,8 @@ in a test environment with fake Ether.
     - [Create Token Contract + interaction](#create-token-contract--interaction)
     - [Testing](#testing)
     - [Connect to Metamask](#connect-to-metamask)
+  - [03. Creating an ERC-20 Token Smart Contract](#03-creating-an-erc-20-token-smart-contract)
+    - [Constructor arguments deployment](#constructor-arguments-deployment)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -78,10 +80,13 @@ provided by the running Genashe instance).
 
 ### Create Token Contract + interaction
 
+* `truffle migrate`
+* `trufle console`
+
 1. Create file `contracts/DappToken.sol`. It will be our ERC20 token.
 2. After creating our basic token, we want to create a new migration file: `2_deploy_contracts.js`
 3. Then we can run migrations using: `truffle migrate` (use --reset flag if needed) (set the `compilers.solc` option for your version of Solidity if needed)
-4. Open the truffle console: `truffle console`. The Truffle console is a JS runtime environment.
+4. Open the truffle console: `truffle console` (the Truffle console is a JS runtime environment)
 5. We will see the `DappToken` object exists as a JavaScript object.
 6. Get JS token object for the API using:
 
@@ -144,3 +149,32 @@ DappToken.deployed().then(obj => token = obj);
 token.transfer("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6", 5000); // Send 5 DAPP tokens
 token.balanceOf("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6").then(e => e.toNumber());
 ```
+
+> Note: every time we run migrations, we fork our contract - so we need to put in a new token.
+
+## 03. Creating an ERC-20 Token Smart Contract
+
+Conventions:
+* FileNames = Capwords = Same as the library/contract they represent
+* Structs or Contracts or Events = CapWords
+* functionNames = mixedCase/camelCase
+* localVariables or stateVariables or modifiers = mixedCase/camelCase
+
+*** functionParameters have _underscores in ERC20 examples and docs, even though the conventions show otherwise.
+
+See ERC20 standards documentation.
+
+### Constructor arguments deployment
+
+In `migrations/2_deploy_contracts.js`, we can pass additional arguments to the deploy function
+to add arguments to the contstructor of the contract
+
+```js
+const DappToken = artifacts.require("./DappToken.sol");
+
+module.exports = function (deployer) {
+  deployer.deploy(DappToken, 1, 2, 3, 'hello'); // <--- constructor arguments
+};
+
+```
+
