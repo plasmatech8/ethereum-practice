@@ -1,5 +1,5 @@
-const Migrations = artifacts.require("./DappToken.sol");
+const DappToken = artifacts.require("./DappToken.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(Migrations);
+  deployer.deploy(DappToken);
 };

@@ -1,4 +1,6 @@
+// "SPDX-License-Identifier: UNLICENSED"
 pragma solidity ^0.7.0;
+
 
 library SafeMath {
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -12,105 +14,58 @@ library SafeMath {
     }
 }
 
+
 interface IERC20 {
     function totalSupply() external view returns (uint256);
-    function balanceOf(address account) external view returns (uint256);
-    function allowance(address owner, address spender) external view returns (uint256);
-    function transfer(address recipient, uint256 amount) external returns (bool);
-    function approve(address spender, uint256 amount) external returns (bool);
-    function transferFrom(address sender,address recipient,uint256 amount) external returns (bool);
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    function balanceOf(address _owner) external view returns (uint256);
+    function allowance(address _owner, address _spender) external view returns (uint256);
+    function transfer(address _to, uint256 _value) external returns (bool);
+    function approve(address _spender, uint256 _value) external returns (bool);
+    function transferFrom(address _from, address _to, uint256 _value) external returns (bool);
+    event Transfer(address indexed _from, address indexed _to, uint256 value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 value);
 }
 
-contract DappToken is IERC20 {
+
+contract DappToken is IERC20{
+    // Token Metadata
+    string public constant name = "DappToken";
+    string public constant symbol = "DAPP";
+    uint8 public constant decimals = 3;
+    uint256 public override totalSupply = 1000000;
+
     // Initialisation
     using SafeMath for uint256;
     constructor() {
-        balances_[msg.sender] = totalSupply_;
-    }
-
-    // Token Metadata
-    string constant name_ = "DappToken";
-    string constant symbol_ = "DAPP";
-    uint8 constant decimals_ = 3;
-    uint256 totalSupply_ = 1000000;
-
-    function name() public pure returns (string memory) {
-        return name_;
-    }
-
-    function symbol() public pure returns (string memory) {
-        return symbol_;
-    }
-
-    function decimals() public pure returns (uint8) {
-        return decimals_;
-    }
-
-    function totalSupply() public override view returns (uint256) {
-        return totalSupply_;
+        balanceOf[msg.sender] = totalSupply;
     }
 
     // Token Ledger
-    mapping(address => uint256) balances_;
-    mapping(address => mapping(address => uint256)) allowed_;
-
-    function balanceOf(address tokenOwner)
-        public
-        override
-        view
-        returns (uint256)
-    {
-        return balances_[tokenOwner];
-    }
-
-    function allowance(address owner, address delegate)
-        public
-        override
-        view
-        returns (uint256)
-    {
-        return allowed_[owner][delegate];
-    }
+    mapping(address => uint256) public override balanceOf;
+    mapping(address => mapping(address => uint256)) public override allowance;
 
     // Transaction Methods
-    function transfer(address receiver, uint256 numTokens)
-        public
-        override
-        returns (bool)
-    {
-        require(numTokens <= balances_[msg.sender]);
-        balances_[msg.sender] = balances_[msg.sender].sub(numTokens);
-        balances_[receiver] = balances_[receiver].add(numTokens);
-        emit Transfer(msg.sender, receiver, numTokens);
+    function transfer(address _to, uint256 _value) public override returns (bool) {
+        require(_value <= balanceOf[msg.sender]);
+        balanceOf[msg.sender] = balanceOf[msg.sender].sub(_value);
+        balanceOf[_to] = balanceOf[_to].add(_value);
+        emit Transfer(msg.sender, _to, _value);
         return true;
     }
 
-    function approve(address delegate, uint256 numTokens)
-        public
-        override
-        returns (bool)
-    {
-        allowed_[msg.sender][delegate] = numTokens;
-        emit Approval(msg.sender, delegate, numTokens);
+    function approve(address _spender, uint256 _value) public override returns (bool) {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
-    function transferFrom(address owner, address buyer, uint256 numTokens)
-        public
-        override
-        returns (bool)
-    {
-        require(numTokens <= balances_[owner]);
-        require(numTokens <= allowed_[owner][msg.sender]);
-
-        balances_[owner] = balances_[owner].sub(numTokens);
-        allowed_[owner][msg.sender] = allowed_[owner][msg.sender].sub(
-            numTokens
-        );
-        balances_[buyer] = balances_[buyer].add(numTokens);
-        emit Transfer(owner, buyer, numTokens);
+    function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
+        require(_value <= balanceOf[_from]);
+        require(_value <= allowance[_from][msg.sender]);
+        balanceOf[_from] = balanceOf[_from].sub(_value);
+        allowance[_from][msg.sender] = allowance[_from][msg.sender].sub(_value);
+        balanceOf[_to] = balanceOf[_to].add(_value);
+        emit Transfer(_from, _to, _value);
         return true;
     }
 }
