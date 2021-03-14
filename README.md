@@ -25,6 +25,7 @@ in a test environment with fake Ether.
     - [Connect to Metamask](#connect-to-metamask)
   - [03. Creating an ERC-20 Token Smart Contract](#03-creating-an-erc-20-token-smart-contract)
     - [Constructor arguments deployment](#constructor-arguments-deployment)
+    - [Using metamask to transfer + view token funds](#using-metamask-to-transfer--view-token-funds)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -150,7 +151,7 @@ token.transfer("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6", 5000); // Send 5 DA
 token.balanceOf("0xF2A3cE8ba43A4224d480Be519E700D25a047f0C6").then(e => e.toNumber());
 ```
 
-> Note: every time we run migrations, we fork our contract - so we need to put in a new token.
+> Note: every time we run migrations with --reset, we fork our contract - so we need to put in a new token.
 
 ## 03. Creating an ERC-20 Token Smart Contract
 
@@ -178,3 +179,11 @@ module.exports = function (deployer) {
 
 ```
 
+### Using metamask to transfer + view token funds
+
+You can import the Genash accounts via private keys into Metamask.
+
+After adding the DAPP token, you can see the token balance of the account.
+
+> If you use truffle migrate --reset, you must re-add the token to each account. The accounts
+> addresses are not changed.
