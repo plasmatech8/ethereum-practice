@@ -26,7 +26,8 @@ in a test environment with fake Ether.
   - [03. Creating an ERC-20 Token Smart Contract](#03-creating-an-erc-20-token-smart-contract)
     - [Constructor arguments deployment](#constructor-arguments-deployment)
     - [Using metamask to transfer + view token funds](#using-metamask-to-transfer--view-token-funds)
-  - [04. Sending ERC20 Tokens](#04-sending-erc20-tokens)
+  - [04. Sending ERC20 Tokens (transfer)](#04-sending-erc20-tokens-transfer)
+  - [05. An Exchange-Ready ERC20 Token (approve/allowance delegation)](#05-an-exchange-ready-erc20-token-approveallowance-delegation)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -189,7 +190,7 @@ After adding the DAPP token, you can see the token balance of the account.
 > If you use truffle migrate --reset, you must re-add the token to each account. The accounts
 > addresses are not changed.
 
-## 04. Sending ERC20 Tokens
+## 04. Sending ERC20 Tokens (transfer)
 
 We need a `transfer` function.
 
@@ -198,5 +199,14 @@ If you use the JavaScript `token.transfer.call('0x123...', 5)` method, it
 used for testing a transaction)
 
 If you use `token.transfer('0x123...', 5)`, it will **submit the transaction** and return the
-reciept .
+reciept.
 
+## 05. An Exchange-Ready ERC20 Token (approve/allowance delegation)
+
+We need a `approve`, and `transferFrom` function for delegated spending.
+
+In unit tests, we can add an additional parameter `{from: delegate}` to specifier the sender of
+a transaction.
+
+We can also view and validate the event logs (`reciept.logs[0].args.*`) and validate them in our
+tests.
