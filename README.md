@@ -27,7 +27,7 @@ in a test environment with fake Ether.
     - [Constructor arguments deployment](#constructor-arguments-deployment)
     - [Using metamask to transfer + view token funds](#using-metamask-to-transfer--view-token-funds)
   - [04. Sending ERC20 Tokens (transfer)](#04-sending-erc20-tokens-transfer)
-  - [05. An Exchange-Ready ERC20 Token (approve/allowance delegation)](#05-an-exchange-ready-erc20-token-approveallowance-delegation)
+  - [05. and 06. An Exchange-Ready ERC20 Token (approve/allowance delegation)](#05-and-06-an-exchange-ready-erc20-token-approveallowance-delegation)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -201,7 +201,7 @@ used for testing a transaction)
 If you use `token.transfer('0x123...', 5)`, it will **submit the transaction** and return the
 reciept.
 
-## 05. An Exchange-Ready ERC20 Token (approve/allowance delegation)
+## 05. and 06. An Exchange-Ready ERC20 Token (approve/allowance delegation)
 
 We need a `approve`, and `transferFrom` function for delegated spending.
 
