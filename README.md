@@ -30,6 +30,7 @@ in a test environment with fake Ether.
   - [05. and 06. An Exchange-Ready ERC20 Token (approve/allowance delegation)](#05-and-06-an-exchange-ready-erc20-token-approveallowance-delegation)
   - [07. Smart Contracts in the Console](#07-smart-contracts-in-the-console)
   - [08. Crowd Sale Smart Contract (ICO)](#08-crowd-sale-smart-contract-ico)
+  - [09. Token Purchase BUY function](#09-token-purchase-buy-function)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -238,3 +239,21 @@ How it works:
 
 We will create a new contract called `DappTokenSale.sol` and add the contract to
 the `2_deploy_contracts.js` migration file.
+
+## 09. Token Purchase BUY function
+
+We need a `buyTokens` function so buyers can purchase tokens at the specified token price (wei).
+
+This will also emit a `Sale` event.
+
+The contract address can own and send ERC tokens. To supply fuel to the token sale contract,
+we will send DAPP tokens from `accounts[0]` to `DappTokenSale.address`.
+
+We can also add a check to ensure that the contract owns enough tokens for the buyer - (although
+this is redundant):
+
+```solidity
+require(tokensBought <= tokenContract.balanceOf(address(this))); // Redundant
+```
+
+> Note: I kinda want to add a 'tokensAvailable' method to the token sale contract..
