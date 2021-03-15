@@ -28,6 +28,8 @@ in a test environment with fake Ether.
     - [Using metamask to transfer + view token funds](#using-metamask-to-transfer--view-token-funds)
   - [04. Sending ERC20 Tokens (transfer)](#04-sending-erc20-tokens-transfer)
   - [05. and 06. An Exchange-Ready ERC20 Token (approve/allowance delegation)](#05-and-06-an-exchange-ready-erc20-token-approveallowance-delegation)
+  - [07. Smart Contracts in the Console](#07-smart-contracts-in-the-console)
+  - [08. Crowd Sale Smart Contract (ICO)](#08-crowd-sale-smart-contract-ico)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -210,3 +212,29 @@ a transaction.
 
 We can also view and validate the event logs (`reciept.logs[0].args.*`) and validate them in our
 tests.
+
+## 07. Smart Contracts in the Console
+
+In `truffle console`, we can test our allowance methods like this:
+
+```js
+DappToken.deployed().then(e => token = e);
+let owner = accounts[1];
+let spender = accounts[2];
+
+token.allowance(owner, spender).then(e => e.toNumber()); // allowance of 0
+token.approve(spender, 100, { from: owner });
+token.allowance(owner, spender).then(e => e.toNumber()); // allowance of 100
+```
+
+## 08. Crowd Sale Smart Contract (ICO)
+
+How it works:
+1. Provision tokens to token sale contract
+1. Set token price in WEI
+1. Assign an admin
+1. Buy tokens
+1. End sale
+
+We will create a new contract called `DappTokenSale.sol` and add the contract to
+the `2_deploy_contracts.js` migration file.
