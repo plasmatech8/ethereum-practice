@@ -26,6 +26,7 @@ in a test environment with fake Ether.
   - [03. Creating an ERC-20 Token Smart Contract](#03-creating-an-erc-20-token-smart-contract)
     - [Constructor arguments deployment](#constructor-arguments-deployment)
     - [Using metamask to transfer + view token funds](#using-metamask-to-transfer--view-token-funds)
+  - [04. Sending ERC20 Tokens](#04-sending-erc20-tokens)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -187,3 +188,15 @@ After adding the DAPP token, you can see the token balance of the account.
 
 > If you use truffle migrate --reset, you must re-add the token to each account. The accounts
 > addresses are not changed.
+
+## 04. Sending ERC20 Tokens
+
+We need a `transfer` function.
+
+If you use the JavaScript `token.transfer.call('0x123...', 5)` method, it
+**returns the function value** without submitting the transaction. (like a data call, which can be
+used for testing a transaction)
+
+If you use `token.transfer('0x123...', 5)`, it will **submit the transaction** and return the
+reciept .
+
