@@ -71,7 +71,7 @@ contract('DappTokenSale', function(accounts) {
     const adminTokensAfter = await tokenInstance.balanceOf(accounts[0])
     const adminEtherAfter = await web3.eth.getBalance(accounts[0]);
     const gasUsed = reciept.receipt.gasUsed;
-    const gasPrice = parseInt(await web3.eth.getGasPrice());
+    const gasPrice = await web3.eth.getGasPrice();
 
     assert.equal(
       adminTokensBefore.toNumber() + contractTokens.toNumber(),
@@ -79,8 +79,8 @@ contract('DappTokenSale', function(accounts) {
       "Tokens not transfered properly"
     );
     assert.equal(
-      parseInt(adminEtherBefore) + parseInt(contractEther) - gasUsed*gasPrice,
-      parseInt(adminEtherAfter),
+      BigInt(adminEtherBefore) + BigInt(contractEther) - BigInt(gasUsed)*BigInt(gasPrice),
+      BigInt(adminEtherAfter),
       "Ether not transfered properly"
     );
   });
