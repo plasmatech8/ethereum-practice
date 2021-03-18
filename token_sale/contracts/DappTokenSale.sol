@@ -7,7 +7,7 @@ import "./SafeMath.sol";
 
 contract DappTokenSale {
     // Sale data
-    address admin;
+    address payable admin;
     DappToken public tokenContract;
     uint256 public tokenPrice;
     uint256 public tokensSold = 0;
@@ -29,6 +29,15 @@ contract DappTokenSale {
         tokensSold += tokensBought;
         emit Sell(msg.sender, tokensBought);
         return true;
+    }
+
+    function endSale() public {
+        require(msg.sender == admin);
+        // Return unsold DAPP tokens to admin
+        tokenContract.transfer(admin, tokenContract.balanceOf(address(this)));
+
+        // Destroy this contract and give ETH to admin
+        selfdestruct(admin);
     }
 
 }

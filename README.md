@@ -31,6 +31,7 @@ in a test environment with fake Ether.
   - [07. Smart Contracts in the Console](#07-smart-contracts-in-the-console)
   - [08. Crowd Sale Smart Contract (ICO)](#08-crowd-sale-smart-contract-ico)
   - [09. Token Purchase BUY function](#09-token-purchase-buy-function)
+  - [10. Ending a Token Sale](#10-ending-a-token-sale)
 
 
 ## 01. Intro to ERC-20 & Setup
@@ -257,3 +258,12 @@ require(tokensBought <= tokenContract.balanceOf(address(this))); // Redundant
 ```
 
 > Note: I kinda want to add a 'tokensAvailable' method to the token sale contract..
+
+## 10. Ending a Token Sale
+
+We will create an `endSale` function which will:
+1. Return unsold DAPP tokens to admin
+2. Destroy this contract and give ETH to the admin
+
+The `selfdestruct(address)` function can be used to destroy a contract and transfer the ETH
+balance to a user.

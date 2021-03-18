@@ -23,12 +23,7 @@ contract('DappTokenSale', function(accounts) {
   });
 
   it('facilitates token buying', async function(){
-    const saleInstance =  await DappTokenSale.deployed();
-    const tokenInstance =  await DappToken.deployed();
     const buyer = accounts[3];
-
-    // Give the contract some DAPP
-    tokenInstance.transfer(saleInstance.address, 1000)
 
     // Buy 100 DAPP
     const buyerBalanceBefore = await tokenInstance.balanceOf(buyer);
@@ -52,7 +47,42 @@ contract('DappTokenSale', function(accounts) {
       assert(error.message !== 'transaction should have failed', 'transaction should have failed');
       assert(error.message.includes('revert'), 'error message must contain revert');
     }
+  });
 
+  it('ends token sale', async function(){
+
+    // Test end sale from non-admin account
+    try {
+      await saleInstance.endSale({ from: accounts[1] });
+      assert.fail('transaction should have failed');
+    } catch(error) {
+      assert(error.message !== 'transaction should have failed', 'transaction should have failed');
+      assert(error.message.includes('revert'), 'error message must contain revert');
+    }
+
+    // Test end sale as admin account
+    const adminTokensBefore = await tokenInstance.balanceOf(accounts[0]);
+    const adminEtherBefore = await web3.eth.getBalance(accounts[0]);
+    const contractTokens = await tokenInstance.balanceOf(saleInstance.address);
+    const contractEther = await web3.eth.getBalance(saleInstance.address);
+
+    const reciept = await saleInstance.endSale({ from: accounts[0] });
+
+    const adminTokensAfter = await tokenInstance.balanceOf(accounts[0])
+    const adminEtherAfter = await web3.eth.getBalance(accounts[0]);
+    const gasUsed = reciept.receipt.gasUsed;
+    const gasPrice = parseInt(await web3.eth.getGasPrice());
+
+    assert.equal(
+      adminTokensBefore.toNumber() + contractTokens.toNumber(),
+      adminTokensAfter.toNumber(),
+      "Tokens not transfered properly"
+    );
+    assert.equal(
+      parseInt(adminEtherBefore) + parseInt(contractEther) - gasUsed*gasPrice,
+      parseInt(adminEtherAfter),
+      "Ether not transfered properly"
+    );
   });
 
 });
