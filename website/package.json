@@ -1,0 +1,17 @@
+{
+  "name": "dapp-token-sale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/contract": "^4.3.10",
+    "bootstrap": "^5.0.0-beta2",
+    "lite-server": "^2.6.1"
+  }
+}
