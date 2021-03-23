@@ -4,15 +4,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>DAPP Token Sale</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-  <h1>DAPP Token ICO Sale</h1>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/web3.min.js"></script>
+
+  <div class="container" style="width: 650px">
+    <div class="row">
+
+      <!-- Header -->
+      <div class="col-lg-12">
+        <h1 class="text-center">DAPP Token ICO Sale</h1>
+        <hr />
+        <br />
+      </div>
+
+      <!-- Loading -->
+      <div id="loader">
+        <p class="text-center">Loading...</p>
+      </div>
+
+      <!-- Content -->
+      <div id="content" class="text-center" style="display: none">
+        <br>
+
+        <!-- Introduction -->
+        <p>Introducing the DAPP Token! (DAPP)</p>
+        <p>Token price is: <span class="token-price">-</span> ETH per 1 miniDAPP *** MUST FIX PRICE</p>
+        <p>You currently have: <span class="dapp-balance">-</span>&nbsp;DAPP</p>
+        <br />
+
+        <!-- Sale form -->
+        <form class="form" role="form">
+          <div class="form-group">
+            <div class="input-group">
+              <input
+                type="number"
+                id="numberOfTokens"
+                class="form-control input-lg"
+                name="number"
+                min="1"
+                pattern="[0-9]"
+                oninput="App.onFormUpdate()"
+              >
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary btn-lg">Buy Tokens</button>
+              </span>
+            </div>
+            <div>
+              <i><p id="purchaseNotice">Enter token purchase amount</p></i>
+            </div>
+          </div>
+        </form>
+        <br>
+
+        <!-- Sale progress -->
+
+        <div class="progress">
+          <div
+            id="progressBar"
+            class="progress-bar progress-bar-striped active progress-bar-animated"
+            role="progressbar"
+          >
+            - %
+          </div>
+        </div>
+        <br>
+        <p><span class="tokens-sold">-</span> / <span class="tokens-total">-</span> tokens sold</p>
+        <p><span class="tokens-available">-</span> tokens available</p>
+        <br>
+        <hr>
+
+        <!-- Account information -->
+        <p>Your address: <span id="accountAddress">-</span></p>
+        <p>DAPP Token address: <span id="dappTokenAddress">-</span></p>
+        <p>DAPP Token Sale address: <span id="dappTokenSaleAddress">-</span></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <script src="ext/bootstrap.bundle.min.js"></script>
+  <script src="ext/web3.min.js"></script>
+  <script src="ext/truffle-contract.min.js"></script>
   <script src="js/app.js"></script>
 
 </body>
