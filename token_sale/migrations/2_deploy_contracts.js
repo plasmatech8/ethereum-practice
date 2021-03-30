@@ -16,11 +16,11 @@ module.exports = async function (deployer) {
   await deployer.deploy(DappToken);
   await deployer.deploy(DappTokenSale, DappToken.address, tokenPrice);
 
-  // Send 500 DAPP from accounts[0] to the token sale
+  // Send 200 DAPP from accounts[0] to the token sale
   const dappToken = await DappToken.deployed();
   const dappTokenSale = await DappTokenSale.deployed();
-  await dappToken.transfer(dappTokenSale.address, 500 * 1e3);
+  await dappToken.transfer(dappTokenSale.address, 200 * 1e3);
 
-  // Buy 80 DAPP as a test
-  await dappTokenSale.buyTokens({ value: 80 * 1e17 });
+  // Buy 10 DAPP as a test (1 ETH)
+  await dappTokenSale.buyTokens({ value: 1 * 1e18 });
 };
