@@ -70,7 +70,14 @@ App = {
         document.querySelector('#dappTokenAddress').innerText = App.dappToken.address;
         document.querySelector('#dappTokenSaleAddress').innerText = App.dappTokenSale.address;
 
-        document.querySelectorAll('.token-price'        ).forEach(e => e.innerText = web3.utils.fromWei(App.tokenPrice, 'ether'));
+        document.querySelectorAll('.token-price-raw'    ).forEach(e => {
+            e.innerText = App.tokenPrice.toNumber().toExponential();
+            // wei/mDAPP
+        });
+        document.querySelectorAll('.token-price'        ).forEach(e => {
+            e.innerText = web3.utils.fromWei(App.toMiniDapp(App.tokenPrice.toString()), 'ether');
+            // ETH/DAPP
+        });
         document.querySelectorAll('.dapp-balance'       ).forEach(e => e.innerText = App.toDapp(App.myDappBalance      ));
         document.querySelectorAll('.tokens-available'   ).forEach(e => e.innerText = App.toDapp(App.numTokensAvailable ));
         document.querySelectorAll('.tokens-sold'        ).forEach(e => e.innerText = App.toDapp(App.numTokensSold      ));
@@ -88,32 +95,32 @@ App = {
     },
 
     onFormUpdate: () => {
-
-        // TODO: Convert from DAPP to miniDAPP (when token price is fixed)
-        // TODO: allow decimal places in the form
-
         const numTokensToBuy = document.querySelector('#numberOfTokens').value;
         const purchaseNotice = document.querySelector('#purchaseNotice');
         if(numTokensToBuy) {
-            const amount = new web3.utils.BN(numTokensToBuy);
-            const price = App.tokenPrice;
-            const charge = web3.utils.fromWei(amount.mul(price), 'ether');
-            purchaseNotice.innerText = `Buy ${amount} miniDAPP for ${charge} ETH`
+            // Calculate charge based on wei/mDapp token price
+            const dappAmount = new web3.utils.BN(numTokensToBuy);
+            const mDappAmount = App.toMiniDapp(dappAmount);
+            const price = App.tokenPrice; // wei/mDAPP
+            const weiCharge = mDappAmount.mul(price);
+            const ethCharge = web3.utils.fromWei(weiCharge, 'ether');
+
+            purchaseNotice.innerText = `Buy ${dappAmount} DAPP for ${ethCharge} ETH`
         } else {
             purchaseNotice.innerText = `Invalid token amount`
         }
     },
 
-    toDapp: amt => {
+    toDapp: amtBn => {
         const factor = new web3.utils.BN(10).pow(new web3.utils.BN(App.tokenDecimals));
-        const d = amt.div(factor);
-        const m = amt.mod(factor);
+        const d = amtBn.div(factor);
+        const m = amtBn.mod(factor);
         return `${d}.${m}` // Returns String (decimal)
     },
 
-    toMiniDapp: amt => {
+    toMiniDapp: amtStr => {
         const factor = new web3.utils.BN(10).pow(new web3.utils.BN(App.tokenDecimals));
-        return new web3.utils.BN(amt).mul(factor); // Returns BigNumber (integer)
+        return new web3.utils.BN(amtStr).mul(factor); // Returns BigNumber (integer)
     }
 
 }
