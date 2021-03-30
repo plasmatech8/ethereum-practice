@@ -19,6 +19,9 @@ App = {
         await DappTokenSale.setProvider(App.web3Provider);
         App.dappTokenSale = await DappTokenSale.deployed();
 
+        // Events
+        App.listenForEvents();
+
         // Update
         await App.update();
         setInterval(App.update, 10000);
@@ -121,8 +124,38 @@ App = {
     toMiniDapp: amtStr => {
         const factor = new web3.utils.BN(10).pow(new web3.utils.BN(App.tokenDecimals));
         return new web3.utils.BN(amtStr).mul(factor); // Returns BigNumber (integer)
-    }
+    },
 
+    buyTokens: async () => {
+        const dappAmount = new web3.utils.BN(document.querySelector('#numberOfTokens').value);
+        const mDappAmount = App.toMiniDapp(dappAmount);
+        const weiCharge = mDappAmount.mul(App.tokenPrice);
+
+        await App.dappTokenSale.buyTokens({
+            from: App.myAccount,
+            value: weiCharge,
+            gas: 500000
+        });
+        console.log(`Bought ${mDappAmount} mDAPP for ${weiCharge} wei`);
+        document.getElementById('form').reset();
+    },
+
+    listenForEvents: async () => {
+        // Using crappy old version of Truffle - cannot figure out
+        /*
+        const sellEvent = await App.dappTokenSale.Sell({}, {
+            fromBlock: 0,
+            toBlock: 'latest',
+        });
+        console.log(sellEvent.watch);
+
+        sellEvent.watch((error, event) => {
+            console.log(event)
+        });
+        console.log('!!!', sellEvent)
+        sellEvent.on('data', );
+        */
+    }
 }
 
 window.onload = App.init;

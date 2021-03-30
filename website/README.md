@@ -30,6 +30,10 @@ We need to expose our contract APIs to our website.
   * Token price is: smallest unit of DAPP <-> WEI
   * I added conversion functions between **miniDapp** (BigNumber integer) and **DAPP** (String decimal)
 
+## 13. Buying tokens
 
-TODO: adjust token price so it is what I wanted (0.001 ETH = 1 DAPP)
-TODO: Convert from DAPP to miniDAPP (when token price is fixed) and allow decimal places in the form
+* We will create a `buyTokens` function that runs when the form is submitted.
+  * `onsubmit="App.buyTokens; return false;"` return false is for preventing default. (*)
+
+* We can also create a `listenForEvents` function - but I will ignore this since I am using an old version of Truffle which does not seem to work right.
+
