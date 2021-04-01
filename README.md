@@ -9,9 +9,14 @@ Playlist: https://www.youtube.com/watch?v=XdKv5uwEk5A&list=PLS5SEs8ZftgWFuKg2wbm
 We will be using the Rinkeby Test Network to create the token
 in a test environment with fake Ether.
 
+## 01. Building the Smart Contract
 
-## See
+See [Token Sale ReamdMe](token_sale/README.md).
 
-The [Token Sale ReamdMe](token_sale/README.md).
+## 02. Building the Token Sale Website
 
-The [Token Website ReadMe](token_sale/README.md).
+See [Token Website ReadMe](token_sale/README.md).
+
+## 03. Getting contracts onto the Rinkeby Test Network
+
+See [DEPLOYMENT.md](DEPLOYMENT.md).
