@@ -6,7 +6,7 @@
   * Geth is a full Ethereum node which we can use to connect to the Rinkerby network.
   * See [these instructions](https://gist.github.com/cryptogoth/10a98e8078cfd69f7ca892ddbdcf26bc) for more details.
 
-![](docs/2021-03-31-19-46-43.png)
+![](img/2021-03-31-19-46-43.png)
 
 * Use command `geth --rinkeby` to create a node on Rinkerby network. Wait for it to finish downloading.
   * You might want to specify the `--ipcpath "~/something/geth.ipc"`. Otherwise you can just search for the default one.
@@ -14,7 +14,7 @@
   * Use `eth.syncing` to get information about the progress of syncronisation / download. (it will return false when the download is complete)
   * If you cannot attach, you need to either specify the ipc and/or find the `geth.ipc` file. And do: `geth attach ipc:/home/mark/.ethereum/rinkeby/geth.ipc`
 
-![](docs/2021-03-31-20-10-59.png)
+![](img/2021-03-31-20-10-59.png)
 
 * We can go to [rinkeby.etherscan.io](rinkeby.etherscan.io) to see block data.
 
@@ -123,4 +123,9 @@ Then run the website `npm run dev` and connect the wallet to the website under t
 The website will connect to whatever network you have open in your MetaMask (either Genache or
 Rinkeby). You can buy tokens from either network, but they will be different tokens in MetaMask
 (different address on each network).
+
+# (15) Website Deployment on GitHub pages
+
+* We can deploy our website to a range of places.
+* We will create a build for our website, and deploy to `gh-pages`.
 

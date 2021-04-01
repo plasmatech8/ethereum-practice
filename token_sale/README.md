@@ -70,12 +70,12 @@ We will use the MetaMask extension for the wallet.
 
 1. Open Genache.
 
-![](../docs/2021-03-11-22-51-00.png)
+![](../img/2021-03-11-22-51-00.png)
 
 2. Navigate in terminal: `cd token_sale/`
 3. Initialise a new Ethereum project using Truffle: `truffle init`
 
-![](../docs/2021-03-11-22-54-04.png)
+![](../img/2021-03-11-22-54-04.png)
 
 4. Go into `truffe-config.js` and add `network.development` information (localhost, with port
 provided by the running Genashe instance).
