@@ -129,3 +129,10 @@ Rinkeby). You can buy tokens from either network, but they will be different tok
 * We can deploy our website to a range of places.
 * We will create a build for our website, and deploy to `gh-pages`.
 
+We will create a build script which compiles files into the docs/ directory.
+
+And enable GitHub pages on the docs/ directory.
+
+Enable execution permissions on `deployFrontend.sh` and execute using `./deployFronted.sh`.
+
+We should now see the website under: https://plasmatech8.github.io/etherium-practice/.
