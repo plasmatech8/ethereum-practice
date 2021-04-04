@@ -1,1 +1,1 @@
-# etherium-practicee
+# ethereum-practice
