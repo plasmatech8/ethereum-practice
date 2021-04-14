@@ -1,0 +1,5 @@
+{
+    "server": {
+        "baseDir": ["./", "../token_sale/build/contracts"]
+    }
+}
