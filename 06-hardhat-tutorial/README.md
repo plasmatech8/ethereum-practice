@@ -141,3 +141,17 @@ Truffle gives us an artifact JSON file.
 
 Hardhat also give us an artifact JSON file, but it does not give us the address - so we need to
 do more work.
+
+We can get around this by writing a new artefact file in the deployment script.
+
+```js
+const fs = require('fs');
+
+// ...
+
+const data = {
+  address: token.address,
+  abi: JSON.parse(token.interface.format('json'))
+}
+fs.writeFileSync('frontend/src/Token.json', JSON.stringify(data));
+```
