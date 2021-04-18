@@ -24,7 +24,7 @@ After we initialised a hardhat project, we can use the `npx hardhat` command to 
 ### Install plugins
 
 ```
-npm install -D @nomiclabs/hardhat-ethers ethers @nomiclabs/hardhat-waffle chai
+npm install -D @nomiclabs/hardhat-ethers ethers @nomiclabs/hardhat-waffle chai ethereum-waffle
 ```
 * `hardhat-ethers` allows us to use ethers library within hardhat
 * `hardhat-waffle` for smart contract testing
@@ -43,7 +43,7 @@ contract Token {
     string public symbol = 'MHT';
     uint public totalSupply = 1000000;
     address public owner;
-    mapping(address => uint) balanceOf;
+    mapping(address => uint) public balanceOf;
 
     constructor(){
         balanceOf[msg.sender] = totalSupply;
@@ -63,3 +63,9 @@ We can then build using `npx hardhat compile`.
 This will create an `artifacts` and `cache` directory.
 
 ## 03. Testing Contracts
+
+We will create tests.
+
+Make sure that `ethereum-waffle` is installed.
+
+We will be using ethers.

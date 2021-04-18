@@ -6,7 +6,7 @@ contract Token {
     string public symbol = 'MHT';
     uint public totalSupply = 1000000;
     address public owner;
-    mapping(address => uint) balanceOf;
+    mapping(address => uint) public balanceOf;
 
     constructor(){
         balanceOf[msg.sender] = totalSupply;
