@@ -17,6 +17,7 @@ Hardhat Docs: https://hardhat.org/getting-started/
     - [Deploy to hardhat local](#deploy-to-hardhat-local)
     - [Deploy to Rinkeby testnet](#deploy-to-rinkeby-testnet)
   - [05. Frontend](#05-frontend)
+  - [notes](#notes)
 
 ## 01. Initialisation
 
@@ -155,3 +156,10 @@ const data = {
 }
 fs.writeFileSync('frontend/src/Token.json', JSON.stringify(data));
 ```
+
+## notes
+
+Things to use with hardhat:
+* TypeScript
+* Hardhat shorthand (`hh` command)
+* Svelte!
